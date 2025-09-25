@@ -185,6 +185,58 @@ int main()
 
 program C++ ini menggunakan perulangan do-while untuk mencetak kalimat "bahlil ke-" secara berulang sesuai dengan jumlah yang dimasukkan oleh pengguna. Awalnya, program menginisialisasi variabel i dengan nilai 1, lalu meminta pengguna untuk memasukkan nilai jum (jumlah perulangan). Berbeda dengan loop while biasa, do-while akan menjalankan blok kode di dalamnya **setidaknya satu kali** sebelum memeriksa kondisi while (i < jum). Di setiap iterasi, program akan mencetak "bahlil ke-" diikuti oleh nilai (i + 1) dan menaikkan nilai i. Perulangan akan terus berlanjut selama nilai i masih lebih kecil dari jum
 
+### Struct
+
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Definisi struct
+struct Mahasiswa {
+    string nama;
+    string nim;
+    float ipk;
+};
+
+int main() {
+
+    Mahasiswa mhs1;
+
+    cout << "Masukkan Nama Mahasiswa: ";
+    getline(cin, mhs1.nama);
+    // cin >> mhs1.nama;
+    cout << "Masukkan NIM Mahasiswa : ";
+    cin >> mhs1.nim;
+    cout << "Masukkan IPK Mahasiswa : ";
+    cin >> mhs1.ipk;
+
+    cout << "\n=== Data Mahasiswa ===" << endl;
+    cout << "Nama : " << mhs1.nama << endl;
+    cout << "NIM  : " << mhs1.nim << endl;
+    cout << "IPK  : " << mhs1.ipk << endl;
+
+    return 0;
+}
+```
+
+> Output
+> ![Screenshot bagian x](output/struct.png)
+
+program C++ ini berfungsi untuk mendata informasi seorang mahasiswa—termasuk nama, NIM, dan IPK—menggunakan sebuah struct. Pertama, program mendefinisikan sebuah tipe data bentukan bernama Mahasiswa yang mengelompokkan tiga variabel: nama (string), nim (string), dan ipk (float). Di dalam fungsi main, sebuah variabel bernama mhs1 dideklarasikan dengan tipe Mahasiswa. Program kemudian meminta pengguna untuk memasukkan data nama, NIM, dan IPK, yang masing-masing disimpan ke dalam anggota dari variabel mhs1 (contoh: mhs1.nama). Setelah semua data dimasukkan, program akan menampilkan kembali informasi yang telah dikumpulkan dalam format yang rapi
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Unguided
 
 ### Soal 1
