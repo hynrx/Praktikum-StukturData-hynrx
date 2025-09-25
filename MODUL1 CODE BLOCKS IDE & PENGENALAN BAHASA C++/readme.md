@@ -225,73 +225,148 @@ int main() {
 
 program C++ ini berfungsi untuk mendata informasi seorang mahasiswa—termasuk nama, NIM, dan IPK—menggunakan sebuah struct. Pertama, program mendefinisikan sebuah tipe data bentukan bernama Mahasiswa yang mengelompokkan tiga variabel: nama (string), nim (string), dan ipk (float). Di dalam fungsi main, sebuah variabel bernama mhs1 dideklarasikan dengan tipe Mahasiswa. Program kemudian meminta pengguna untuk memasukkan data nama, NIM, dan IPK, yang masing-masing disimpan ke dalam anggota dari variabel mhs1 (contoh: mhs1.nama). Setelah semua data dimasukkan, program akan menampilkan kembali informasi yang telah dikumpulkan dalam format yang rapi
 
+### Test
 
+```cpp
+#include <iostream>
+using namespace std;
+int main()
+{
+    string ch;
+    cout << "Masukkan sebuah karakter: ";
+    // cin >> ch;
+    ch = getchar();  //Menggunakan getchar() untuk membaca satu karakter
+    cout << "Karakter yang Anda masukkan adalah: " << ch << endl;
+    return 0;
+}
+```
 
+> Output
+> ![Screenshot bagian x](output/test.png)
 
-
-
-
-
-
-
-
-
+program C++ ini berfungsi untuk membaca satu karakter tunggal dari input keyboard dan menampilkannya kembali. Kode ini secara spesifik menggunakan fungsi getchar() yang akan langsung mengambil karakter pertama yang diketik oleh pengguna, tanpa perlu menunggu tombol Enter ditekan untuk melanjutkan eksekusi. Karakter yang dibaca tersebut kemudian disimpan dalam variabel string ch dan dicetak
 
 ## Unguided
 
 ### Soal 1
 
-copy paste soal nomor 1 disini
+> ![Screenshot bagian x](soal/soal1.png)
 
-```go
-package main
+```cpp
+#include <iostream>
+using namespace std;
 
-func main() {
-	fmt.Println("Kode kalian disini")
-	fmt.Println("JANGAN MASUKIN >>SCREENSHOT<< KODE KALIAN DISINI")
-	fmt.Println("KALAU ADA -20 POIN LAPRAK")
+int main() {
+    float nuy1, nuy2;
+    cout << "bilangan pertama : ";
+    cin >> nuy1;
+    cout << "bilangan kedua   : ";
+    cin >> nuy2;
+    cout << "penjumlahan : " << nuy1 + nuy2 << endl;
+    cout << "pengurangan : " << nuy1 - nuy2 << endl;
+    cout << "perkalian   : " << nuy1 * nuy2 << endl;
+    cout << "pembagian   : " << nuy1 / nuy2 << endl;
+    return 0;
 }
 ```
 
 > Output
-> ![Screenshot bagian x](output/screenshot_soal1.png)
-> %% Untuk mencantumkan screenshot, tidak boleh ada spasi di urlnya `()`, penamaan file bebas asal gak sara dan mudah dipahami aja,, dan jangan lupa hapus komen ini yah%%
+> ![Screenshot bagian x](output/soal1.png)
 
-Penjelasan ttg kode kalian disini
+program C++ ini berfungsi sebagai kalkulator sederhana untuk melakukan empat operasi aritmatika dasar. Kode tersebut meminta pengguna untuk memasukkan dua buah bilangan bertipe float (desimal) yang disimpan dalam variabel nuy1 dan nuy2. Setelah menerima kedua input, program akan langsung menghitung dan menampilkan hasil dari operasi penjumlahan, pengurangan, perkalian, dan pembagian dari kedua bilangan tersebut secara berurutan
 
 ### Soal 2
 
-soal nomor 2A
+> ![Screenshot bagian x](soal/soal2.png)
 
-```go
-package main
+```cpp
+#include <iostream>
+#include <string>
+using namespace std;
 
-func main() {
-	fmt.Println("kode untuk soal nomor 2A")
+string sebut(int nuy) {
+    string satuan[] = {"", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan"};
+    if (nuy < 0 || nuy > 100) return "angka harus 0 - 100!!!";
+    if (nuy == 0) return "nol";
+    if (nuy == 10) return "sepuluh";
+    if (nuy == 11) return "sebelas";
+    if (nuy == 100) return "seratus";
+    if (nuy < 10) {
+        return satuan[nuy];
+    } else if (nuy < 20) {
+        return satuan[nuy % 10] + " belas";
+    } else {
+        string puluhan = satuan[nuy / 10] + " puluh";
+        if (nuy % 10 == 0) {
+            return puluhan;
+        } else {
+            return puluhan + " " + satuan[nuy % 10];
+        }
+    }
+}
+
+int main() {
+    int nuy;
+    cout << "masukkan angka 0 - 100 : ";
+    cin >> nuy;
+    if (nuy >= 0 && nuy <= 100) {
+        cout << nuy << " : " << sebut(nuy) << endl;
+    } else {
+        cout << "angka harus 0 - 100!!!" << endl;
+    }
+    return 0;
 }
 ```
 
 > Output
-> ![Screenshot bagian x](output/screenshot_soal2A.png)
+> ![Screenshot bagian x](output/soal2.png)
 
-penjelasan kode
+program C++ ini berfungsi untuk mengubah sebuah angka bulat antara 0 hingga 100 menjadi bentuk tulisan dalam Bahasa Indonesia. Logika utama program ini terdapat dalam fungsi sebut yang pertama-tama menangani kasus-kasus khusus seperti 0, 10, 11, dan 100. Untuk angka lainnya, program menggunakan operasi matematika sederhana seperti pembagian dan modulus untuk memisahkan digit puluhan dan satuan, lalu menggabungkannya dengan kata "puluh" atau "belas" sesuai aturan bahasa. Fungsi main bertugas menerima input dari pengguna, memastikan angka yang dimasukkan valid, lalu memanggil fungsi sebut untuk mendapatkan hasil konversi dan menampilkannya ke layar
 
-Kalau adalanjutan di lanjut disini aja
+### Soal 3
 
-soal nomor 2B
+> ![Screenshot bagian x](soal/soal3.png)
 
-```go
-package main
+```cpp
+#include <iostream>
+using namespace std;
 
-func main() {
-	fmt.Println("kode untuk soal nomor 2B")
+int main() {
+    int nuy;
+    cout << "input: ";
+    cin >> nuy;
+    cout << "output:" << endl;
+    for (int i = nuy; i >= 1; --i) {
+        for (int x = 0; x < (nuy - i); ++x) {
+            cout << "  ";
+        }
+        for (int a = i; a >= 1; --a) {
+            cout << a;
+            if (a > 1) {
+                cout << " ";
+            }
+        }
+        cout << " * ";
+        for (int k = 1; k <= i; ++k) {
+            cout << k;
+            if (k < i) {
+                cout << " ";
+            }
+        }
+        cout << endl;
+    }
+    for (int x = 0; x < nuy; ++x) {
+        cout << "  ";
+    }
+    cout << "*" << endl;
+    return 0;
 }
 ```
 
 > Output
-> ![Screenshot bagian x](output/screenshot_soal2B.png)
+> ![Screenshot bagian x](output/soal3.png)
 
-penjelasan bedanya sesuai soal
+program C++ ini berfungsi untuk membuat pola piramida angka terbalik yang simetris dan miring ke kanan. Pengguna diminta memasukkan sebuah angka (nuy) sebagai nilai awal. Program kemudian menggunakan serangkaian perulangan (for) bersarang: loop pertama menambahkan spasi di awal setiap baris untuk menciptakan efek miring, loop berikutnya mencetak angka secara menurun dari nilai baris saat ini ke 1, lalu mencetak *, diikuti loop yang mencetak angka secara menaik dari 1 hingga nilai baris saat ini. Setelah pola piramida selesai, sebuah loop terakhir akan mencetak spasi untuk menempatkan satu karakter * di baris paling bawah agar sejajar dengan ujung piramida
 
 ## Referensi
 
