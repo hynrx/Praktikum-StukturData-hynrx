@@ -1,5 +1,5 @@
 
-# <h1 align="center">Laporan Praktikum Modul 1 <br> Code Blocks IDE & Pengenalan Bahasa C++</h1>
+# <h1 align="center">Laporan Praktikum Modul 1 <br> Pengenalan Bahasa C++</h1>
 <p align="center">HISYAM NURDIATMOKO - 103112400049</p>
 
 ## Dasar Teori
