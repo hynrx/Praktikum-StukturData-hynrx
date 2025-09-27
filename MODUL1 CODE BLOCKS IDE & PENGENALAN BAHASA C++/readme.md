@@ -370,14 +370,12 @@ program C++ ini berfungsi untuk membuat pola piramida angka terbalik yang simetr
 
 ## Referensi
 
-Stroustrup, B. (2013). The C++ Programming Language (4th ed.). Addison-Wesley Professional.
+Tentu, ini adalah versi referensi yang lebih ringkas dan padat.
 
-Prata, S. (2012). C++ Primer Plus (6th ed.). Addison-Wesley Professional.
+### Referensi
 
-Lafore, R. (2002). Object-Oriented Programming in C++ (4th ed.). Sams Publishing.
+https://www.geeksforgeeks.org/cpp/ (diakses pada 27 September 2025).
 
-https://www.geeksforgeeks.org/c-plus-plus/
-
-https://cplusplus.com/doc/tutorial/
+http://www.cplusplus.com/doc/tutorial/ (diakses pada 27 September 2025).
 
 
