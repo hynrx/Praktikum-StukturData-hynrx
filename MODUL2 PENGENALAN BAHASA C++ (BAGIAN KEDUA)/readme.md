@@ -329,4 +329,6 @@ program C++ ini menunjukkan bagaimana sebuah fungsi dapat mengubah nilai variabe
 
 Modul 2: Pengenalan Bahasa C++ (Bagian Kedua). Bandung: Laboratorium Informatika, Fakultas Informatika, Telkom University.
 
+https://www.geeksforgeeks.org/cpp/ (diakses pada 30 September 2025).
 
+http://www.cplusplus.com/doc/tutorial/ (diakses pada 30 September 2025).
