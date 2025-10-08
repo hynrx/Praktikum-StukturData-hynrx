@@ -197,25 +197,59 @@ program C++ ini adalah sistem pendataan nilai mahasiswa yang dirancang secara mo
 
 ### Soal 2
 
-Buatlah program yang menunjukkan penggunaan call by reference. Buat sebuah prosedur bernama kuadratkan yang menerima satu parameter integer secara referensi (&). Prosedur ini akan mengubah nilai asli variabel yang dilewatkan dengan nilai kuadratnya. Tampilkan nilai variabel di main() sebelum dan sesudah memanggil prosedur untuk membuktikan perubahannya. 
+> ![Screenshot bagian x](soal/soal2.png)
+
+#### unguided2.h
+
+```cpp
+#ifndef PELAJARAN_H_INCLUDED
+#define PELAJARAN_H_INCLUDED
+#include <string>
+using namespace std;
+
+struct pelajaran {
+    string namamapel;
+    string kodemapel;
+};
+
+pelajaran create_pelajaran(string namapel, string kodepel);
+void tampil_pelajaran(pelajaran pel);
+
+#endif
+```
+
+#### unguided2.cpp
 
 ```cpp
 #include <iostream>
+#include "unguided2.h"
 using namespace std;
 
-void kuadratkan(int &angka) {
-    angka = angka * angka;
+pelajaran create_pelajaran(string namapel, string kodepel) {
+    pelajaran p;
+    p.namamapel = namapel;
+    p.kodemapel = kodepel;
+    return p;
 }
 
-int main() 
+void tampil_pelajaran(pelajaran pel) {
+    cout << "nama pelajaran: " << pel.namamapel << endl;
+    cout << "nilai: " << pel.kodemapel << endl;
+}
+```
 
-{
-    int nilai = 5;
-    
-    cout << "Nilai awal: " << nilai << endl;
-    kuadratkan(nilai);
-    cout << "Nilai setelah dikuadratkan: " << nilai << endl;
+#### main.cpp
 
+```cpp
+#include <iostream>
+#include "unguided2.h"
+using namespace std;
+
+int main() {
+    string namapel = "Struktur Data";
+    string kodepel = "STD";
+    pelajaran pel = create_pelajaran(namapel, kodepel);
+    tampil_pelajaran(pel);
     return 0;
 }
 ```
@@ -223,7 +257,108 @@ int main()
 > Output
 > ![Screenshot bagian x](output/soal2.png)
 
-program C++ ini menunjukkan bagaimana sebuah fungsi dapat mengubah nilai variabel asli menggunakan metode pass-by-reference. Fungsi `kuadratkan` menerima parameternya sebagai referensi, yang ditandai dengan simbol `&`, sehingga `angka` di dalam fungsi menjadi alias atau nama lain untuk variabel `nilai` yang ada di fungsi `main`. Ketika `kuadratkan(nilai)` dipanggil, operasi perkalian di dalamnya langsung memodifikasi variabel `nilai` yang asli. Hasilnya, nilai variabel yang awalnya 5 berubah secara permanen menjadi 25 setelah fungsi tersebut dieksekusi, seperti yang ditunjukkan pada output akhir.
+program C++ ini menunjukkan penggunaan struct untuk mengelola data mata pelajaran dalam desain yang modular. Program mendefinisikan sebuah struct bernama pelajaran untuk menyimpan nama dan kode mata pelajaran. Fungsi main kemudian menginisialisasi data untuk mata pelajaran "Struktur Data" dengan kode "STD" secara hardcode, lalu memanggil fungsi create_pelajaran untuk membuat sebuah objek dari data tersebut. Akhirnya, program menggunakan fungsi tampil_pelajaran untuk mencetak atau menampilkan detail nama dan kode dari mata pelajaran yang telah dibuat ke terminal.
+
+### Soal 3
+
+```
+Buatlah program dengan ketentuan :
+- 2 buah array 2D integer berukuran 3x3 dan 2 buah pointer integer
+- fungsi/prosedur yang menampilkan isi sebuah array integer 2D
+- fungsi/prosedur yang akan menukarkan isi dari 2 array integer 2D pada posisi tertentu
+- fungsi/prosedur yang akan menukarkan isi dari variabel yang ditunjuk oleh 2 buah pointer
+```
+
+#### unguided3.h
+
+```cpp
+#ifndef ARRAY_POINTER_UTIL_H_INCLUDED
+#define ARRAY_POINTER_UTIL_H_INCLUDED
+
+void tampilkanArray(int ar[3][3]);
+void tukarElemenArray(int ar1[3][3], int ar2[3][3], int baris, int kolom);
+void tukarPointer(int* ptr1, int* ptr2);
+
+#endif
+```
+
+#### unguided3.cpp
+
+```cpp
+#include "unguided3.h"
+#include <iostream>
+using namespace std;
+
+void tampilkanArray(int ar[3][3]) {
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            cout << ar[i][j] << "  ";
+        }
+        cout << endl;
+    }
+}
+
+void tukarElemenArray(int ar1[3][3], int ar2[3][3], int baris, int kolom) {
+    if (baris >= 0 && baris < 3 && kolom >= 0 && kolom < 3) {
+        int temp = ar1[baris][kolom];
+        ar1[baris][kolom] = ar2[baris][kolom];
+        ar2[baris][kolom] = temp;
+    }
+}
+
+void tukarPointer(int* ptr1, int* ptr2) {
+    int temp = *ptr1;
+    *ptr1 = *ptr2;
+    *ptr2 = temp;
+}
+```
+
+#### main.cpp
+
+```cpp
+#include <iostream>
+#include "unguided3.h"
+using namespace std;
+
+int main() {
+    int arrayA[3][3] = { {1, 2, 3}, {4, 5, 6}, {7, 8, 9} };
+    int arrayB[3][3] = { {10, 20, 30}, {40, 50, 60}, {70, 80, 90} };
+
+    cout << "array sebelum ditukar" << endl;
+    cout << "array a:" << endl;
+    tampilkanArray(arrayA);
+    cout << "array b:" << endl;
+    tampilkanArray(arrayB);
+
+    tukarElemenArray(arrayA, arrayB, 1, 1);
+
+    cout << "\narray setelah ditukar" << endl;
+    cout << "array a:" << endl;
+    tampilkanArray(arrayA);
+    cout << "array b:" << endl;
+    tampilkanArray(arrayB);
+
+    int var1 = 100;
+    int var2 = 200;
+    int* p1 = &var1;
+    int* p2 = &var2;
+
+    cout << "\npointer sebelum ditukar" << endl;
+    cout << "nilai p1: " << *p1 << ", nilai p2: " << *p2 << endl;
+
+    tukarPointer(p1, p2);
+
+    cout << "\npointer setelah ditukar" << endl;
+    cout << "nilai p1: " << *p1 << ", nilai p2: " << *p2 << endl;
+    
+    return 0;
+}
+```
+
+> Output
+> ![Screenshot bagian x](output/soal3.png)
+
+program C++ ini mendemonstrasikan dua metode pertukaran nilai (swapping) yang berbeda menggunakan desain modular. Pertama, program ini menginisialisasi dua buah array dua dimensi 3x3, lalu menunjukkan cara menukar satu elemen spesifik (pada indeks [1][1]) di antara kedua array tersebut menggunakan fungsi tukarElemenArray. Kedua, program ini juga mendemonstrasikan cara menukar nilai dari dua variabel dengan melewatkan alamat memori mereka ke sebuah fungsi (tukarPointer) yang memanipulasi nilai melalui pointer. Hasil sebelum dan sesudah dari kedua operasi pertukaran tersebut kemudian ditampilkan ke terminal untuk menunjukkan perubahannya.
 
 ## Referensi
 
