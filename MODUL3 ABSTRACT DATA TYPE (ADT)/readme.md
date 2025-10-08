@@ -362,9 +362,9 @@ program C++ ini mendemonstrasikan dua metode pertukaran nilai (swapping) yang be
 
 ## Referensi
 
-Modul 2: Pengenalan Bahasa C++ (Bagian Kedua). Bandung: Laboratorium Informatika, Fakultas Informatika, Telkom University.
+Laboratorium Informatika, Fakultas Informatika, Telkom University. (2025). Modul 3: Abstract Data Type (ADT). Bandung: Telkom University.
 
-https://www.geeksforgeeks.org/cpp/ (diakses pada 30 September 2025).
+[GeeksforGeeks. (2025). C++ Programming Language.](https://www.geeksforgeeks.org/cpp/) Diakses pada 8 Oktober 2025
 
-http://www.cplusplus.com/doc/tutorial/ (diakses pada 30 September 2025).
+[cplusplus.com. (2025). C++ Language Tutorial.](http://www.cplusplus.com/doc/tutorial/) Diakses pada 8 Oktober 2025
 
