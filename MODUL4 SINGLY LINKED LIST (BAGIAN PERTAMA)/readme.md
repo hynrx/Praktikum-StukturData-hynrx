@@ -409,4 +409,10 @@ program C++ ini mendemonstrasikan operasi dasar pada struktur data singly linked
 
 ## Referensi
 
+Laboratorium Dasar Teknik Informatika. (n.d.). Modul 4: Singly Linked List (Bagian Pertama) [Modul Praktikum]. Telkom University, Bandung.
+
+[GeeksforGeeks. (2024). Singly Linked List.](https://www.geeksforgeeks.org/data-structures/linked-list/singly-linked-list/) Diakses pada 8 Oktober 2025
+
+
+
 
