@@ -224,7 +224,7 @@ int main() {
 ```
 
 > Output
-> ![Screenshot bagian x](output/guided1.png)
+> ![Screenshot bagian x](output/guided.png)
 
 program C++ ini adalah implementasi dari struktur data singly linked list untuk mengelola serangkaian data bilangan bulat. Program menyediakan menu interaktif berbasis teks yang memungkinkan pengguna untuk melakukan berbagai operasi dasar pada linked list, seperti menambahkan data di depan, di belakang, atau setelah data tertentu. Selain itu, pengguna juga dapat menghapus, memperbarui (update), mencari, dan menampilkan seluruh isi dari linked list tersebut hingga pengguna memilih opsi untuk keluar dari program.
 
