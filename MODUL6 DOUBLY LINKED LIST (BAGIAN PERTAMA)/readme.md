@@ -273,7 +273,7 @@ program C++ ini adalah implementasi dari struktur data doubly linked list yang m
 
 code untuk nomor 1 sampai 3
 
-#### doublylinkedlist.h
+#### doublylist.h
 
 ```cpp
 #ifndef DOUBLYLIST_H
@@ -316,7 +316,7 @@ void deleteAfter(List& L, address Prec, address& P);
 #endif
 ```
 
-#### doublylinkedlist.cpp
+#### doublylist.cpp
 
 ```cpp
 #include "Doublylist.h"
