@@ -261,56 +261,103 @@ int main() {
 }
 ```
 
-#### 1. Buatlah ADT Doubly Linked list sebagai berikut di dalam file “Doublylist.h”:
+#### 1. Buatlah ADT Stack menggunakan ARRAY sebagai berikut di dalam file “stack.h”:
 
 ```
-Type infotype : kendaraan <
- nopol : string
- warna : string
- thnBuat : integer
+Type infotype : integer
+Type Stack <
+    info : array [20] of integer
+    top : integer
 >
-Type address : pointer to ElmList
-Type ElmList <
- info : infotype
- next :address
- prev : address
->
-Type List <
- First : address
- Last : address
->
-procedure CreateList( input/output L : List )
-function alokasi( x : infotype ) → address
-procedure dealokasi(input/output P : address )
-procedure printInfo( input L : List )
-procedure insertLast(input/output L : List, input P : address )
+procedure CreateStack( input/output S : Stack )
+procedure push(input/output S : Stack,
+    input x : infotype)
+function pop(input/output t S : Stack )
+    → infotype
+procedure printInfo( input S : Stack )
+procedure balikStack(input/output S : Stack )
 ```
-Buatlah implementasi ADT Doubly Linked list pada file “Doublylist.cpp” dan coba hasil
-implementasi ADT pada file “main.cpp”.
+Buatlah implementasi ADT Stack menggunakan Array pada file “stack.cpp” dan “main.cpp”
+
+```
+int main()
+{
+    cout << "Hello world!" <<
+endl;
+    Stack S;
+    createStack(S);
+    Push(S,3);
+    Push(S,4);
+    Push(S,8);
+    pop(S)
+    Push(S,2);
+    Push(S,3);
+    pop(S);
+    Push(S,9);
+    printInfo(S);
+    cout<<"balik stack"<<endl;
+    balikStack(S);
+    printInfo(S);
+    return 0;
+}
+```
 
 > Output nomor 1
-> ![Screenshot bagian x](output/out1.png)
-> ![Screenshot bagian x](output/out1(2).png)
+> ![Screenshot bagian x](output/unguided1.png)
 
-#### 2. Carilah elemen dengan nomor polisi D001 dengan membuat fungsi baru.
-fungsi findElm( L : List, x : infotype ) : address
+#### 2. Tambahkan prosedur pushAscending( in/out S : Stack, in x : integer).
+
+```
+int main()
+{
+    cout << "Hello world!" << endl;
+    Stack S;
+    createStack(S);
+    pushAscending(S,3);
+    pushAscending(S,4);
+    pushAscending(S,8);
+    pushAscending(S,2);
+    pushAscending(S,3);
+    pushAscending(S,9);
+    printInfo(S);
+    cout<<"balik stack"<<endl;
+    balikStack(S);
+    printInfo(S);
+    return 0;
+}
+
+```
 
 > Output nomor 2
-> ![Screenshot bagian x](output/out2.png)
+> ![Screenshot bagian x](output/unguided2.png)
 
-#### 3. Hapus elemen dengan nomor polisi D003 dengan procedure delete.
-- procedure deleteFirst( input/output L : List, P : address )
-- procedure deleteLast( input/output L : List, P : address )
-- procedure deleteAfter( input Prec : address, input/output P : address )
+#### 3. Tambahkan prosedur getInputStream( in/out S : Stack ). 
+Prosedur akan terus membaca dan menerima input user dan memasukkan setiap input ke dalam stack hingga user menekan tombol enter. 
+Contoh: gunakan cin.get() untuk mendapatkan inputan user.
+
+```
+int main()
+{
+    cout << "Hello world!" << endl;
+    Stack S;
+    createStack(S);
+    getInputStream(S);
+    printInfo(S);
+    cout<<"balik stack"<<endl;
+    balikStack(S);
+    printInfo(S);
+    return 0;
+}
+```
 
 > Output nomor 3
-> ![Screenshot bagian x](output/out3.png)
+> ![Screenshot bagian x](output/unguided3.png)
 
-program C++ ini mengimplementasikan Abstract Data Type (ADT) untuk doubly linked list guna mengelola data kendaraan, sesuai dengan spesifikasi yang diminta. Program dibagi menjadi tiga file: Doublylist.h yang mendefinisikan struktur data untuk kendaraan dan elemen list serta mendeklarasikan fungsi-fungsi dasar, Doublylist.cpp yang berisi implementasi dari fungsi-fungsi tersebut seperti alokasi memori, penyisipan di akhir, pencarian, dan penghapusan elemen, serta main.cpp yang menyediakan antarmuka menu interaktif bagi pengguna. Melalui menu ini, pengguna dapat melakukan operasi-operasi utama seperti menambahkan data kendaraan baru (dengan validasi duplikat nomor polisi), mencari kendaraan berdasarkan nomor polisi, menghapus data tertentu, dan menampilkan seluruh daftar kendaraan yang telah tersimpan.
+program c++ unguided 1 sampai 3 ini adalah implementasi lengkap dari struktur data stack menggunakan array (representasi tabel) dalam C++, yang terbagi menjadi tiga file. File stack.h mendefinisikan struktur Stack dan prototipe fungsi-fungsinya. File stack.cpp berisi implementasi dari fungsi-fungsi tersebut, termasuk operasi dasar seperti push dan pop, serta fungsi tambahan seperti balikStack untuk membalik urutan elemen, pushAscending untuk memasukkan data secara terurut, dan getInputStream untuk membaca input dari pengguna. Terakhir, file main.cpp bertindak sebagai program utama yang mendemonstrasikan penggunaan semua fungsi tersebut pada tiga stack yang berbeda
 
 ## Referensi
 
-Modul 6: Doubly Linked List (Bagian Pertama)
+Modul 7: STACK
 
 
 
