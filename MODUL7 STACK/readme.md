@@ -359,6 +359,8 @@ program c++ unguided 1 sampai 3 ini adalah implementasi lengkap dari struktur da
 
 Modul 7: STACK
 
+https://www.geeksforgeeks.org/stack-data-structure/. Diakses pada 31 Oktober 2025
+
 
 
 
