@@ -300,6 +300,7 @@ Buatlah implementasi ADT Queue pada file “queue.cpp” dengan menerapkan mekan
 queue Alternatif 2 (head bergerak, tail bergerak).
 
 untuk file header (queue.h) dan program utama (main.cpp) sama dengan nomor 1 yang berbeda hanya file queue.cpp
+
 queue.h
 ```cpp
 #ifndef QUEUE_H
@@ -449,6 +450,7 @@ Buatlah implementasi ADT Queue pada file “queue.cpp” dengan menerapkan mekan
 queue Alternatif 3 (head dan tail berputar).
 
 untuk file header (queue.h) dan program utama (main.cpp) sama dengan nomor 1 yang berbeda hanya file queue.cpp
+
 queue.h
 ```cpp
 #ifndef QUEUE_H
@@ -590,7 +592,8 @@ Program C++ soal 3 ini mengimplementasikan Alternatif 3 (circular buffer) dari m
 
 Modul 8: QUEUE [Modul Praktikum]. Telkom University, Bandung.
 
-[GeeksforGeeks. (2024). Singly Linked List.](https://www.geeksforgeeks.org/data-structures/linked-list/singly-linked-list/) Diakses pada 18 Oktober 2025
+
+
 
 
 
