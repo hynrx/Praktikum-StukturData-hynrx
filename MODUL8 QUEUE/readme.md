@@ -441,13 +441,157 @@ int main() {
 > Output
 > ![Screenshot bagian x](output/soal2.png)
 
-program C++ ini adalah sebuah sistem manajemen perpustakaan sederhana yang menggunakan struktur data singly linked list untuk mengelola koleksi buku. Melalui antarmuka menu berbasis teks, pengguna dapat melakukan operasi dasar seperti menambahkan buku baru ke dalam daftar, menghapus buku berdasarkan ISBN, memperbarui detail buku (judul dan penulis) yang sudah ada, serta menampilkan keseluruhan daftar buku. Selain itu, program ini juga menyediakan fitur pencarian buku yang fleksibel, memungkinkan pengguna untuk menemukan buku berdasarkan ISBN, judul, atau nama penulis.
+Program C++ soal 2 ini mengimplementasikan Alternatif 2 dari modul Anda, di mana head dan tail sama-sama bergerak. Logika kuncinya adalah pada dequeue, yang kini sangat efisien karena hanya memajukan head (Q.head++) tanpa menggeser seluruh elemen. Sebagai konsekuensinya, enqueue harus menangani kondisi "penuh semu" (pseudo-full), yaitu ketika tail mencapai akhir array namun di bagian awal masih ada ruang kosong. Fungsi enqueue Anda mengatasi ini dengan melakukan pergeseran elemen kembali ke awal array, tetapi hanya jika kondisi "penuh semu" itu terjadi dan elemen baru akan ditambahkan.
+
+### Soal 3
+
+Buatlah implementasi ADT Queue pada file “queue.cpp” dengan menerapkan mekanisme
+queue Alternatif 3 (head dan tail berputar).
+
+untuk file header (queue.h) dan program utama (main.cpp) sama dengan nomor 1 yang berbeda hanya file queue.cpp
+queue.h
+```cpp
+#ifndef QUEUE_H
+#define QUEUE_H
+
+#include <iostream>
+using namespace std;
+
+#define MAX 5
+
+typedef int infotype;
+
+struct Queue {
+    infotype info[MAX];
+    int head;
+    int tail;
+};
+
+void createQueue(Queue &Q);
+bool isEmptyQueue(Queue Q);
+bool isFullQueue(Queue Q);
+void enqueue(Queue &Q, infotype x);
+void dequeue(Queue &Q);
+void printInfo(Queue Q);
+
+#endif 
+```
+
+queue.cpp (alternatif 3)
+```
+#include "queue.h"
+
+void createQueue(Queue &Q) {
+    Q.head = -1;
+    Q.tail = -1;
+}
+
+bool isEmptyQueue(Queue Q) {
+    return (Q.head == -1);
+}
+
+bool isFullQueue(Queue Q) {
+    return ((Q.tail + 1) % MAX == Q.head);
+}
+
+void enqueue(Queue &Q, infotype x) {
+    if (isFullQueue(Q)) {
+        cout << "queue penuh, tidak bisa menambah data" << endl;
+    } else {
+        if (isEmptyQueue(Q)) {
+            Q.head = 0;
+        }
+        Q.tail = (Q.tail + 1) % MAX;
+        Q.info[Q.tail] = x;
+    }
+}
+
+void dequeue(Queue &Q) {
+    if (isEmptyQueue(Q)) {
+        cout << "queue kosong" << endl;
+    } else {
+        if (Q.head == Q.tail) {
+            createQueue(Q);
+        } else {
+            Q.head = (Q.head + 1) % MAX;
+        }
+    }
+}
+
+void printInfo(Queue Q) {
+    cout << Q.head << " \t " << Q.tail << " \t | ";
+    
+    if (isEmptyQueue(Q)) {
+        cout << "empty queue" << endl;
+    } else {
+        int i = Q.head;
+        while (true) {
+            cout << Q.info[i] << " ";
+            if (i == Q.tail) {
+                break;
+            }
+            i = (i + 1) % MAX;
+        }
+        cout << endl;
+    }
+}
+```
+
+main.cpp
+```
+#include <iostream>
+#include "queue.h"
+
+using namespace std;
+
+int main() {
+    Queue Q;
+    
+    cout << "H \t T \t | Queue info" << endl;
+    cout << "----------------------------------" << endl;
+
+    createQueue(Q);
+    printInfo(Q);
+
+    enqueue(Q, 5);
+    printInfo(Q);
+
+    enqueue(Q, 2);
+    printInfo(Q);
+
+    enqueue(Q, 7);
+    printInfo(Q);
+
+    dequeue(Q);
+    printInfo(Q);
+
+    enqueue(Q, 4);
+    printInfo(Q);
+
+    dequeue(Q);
+    printInfo(Q);
+
+    dequeue(Q);
+    printInfo(Q);
+    
+    dequeue(Q);
+    printInfo(Q);
+
+    return 0;
+}
+```
+
+> Output
+> ![Screenshot bagian x](output/soal3.png)
+
+Program C++ soal 3 ini mengimplementasikan Alternatif 3 (circular buffer) dari modul Anda, yang merupakan metode paling efisien. Inti dari logika ini adalah penggunaan operator modulo (% MAX) baik pada fungsi enqueue maupun dequeue. Saat tail atau head mencapai akhir array, mereka secara otomatis "berputar" kembali ke indeks 0. Desain ini secara elegan menyelesaikan masalah "penuh semu" dari Alternatif 2 dan sepenuhnya menghilangkan kebutuhan untuk pergeseran elemen yang tidak efisien. Fungsi isFullQueue dan printInfo juga telah disesuaikan untuk menangani logika perputaran ini dengan benar.
 
 ## Referensi
 
-Modul 5: Singly Linked List (Bagian Kedua) [Modul Praktikum]. Telkom University, Bandung.
+Modul 8: QUEUE [Modul Praktikum]. Telkom University, Bandung.
 
 [GeeksforGeeks. (2024). Singly Linked List.](https://www.geeksforgeeks.org/data-structures/linked-list/singly-linked-list/) Diakses pada 18 Oktober 2025
+
 
 
 
