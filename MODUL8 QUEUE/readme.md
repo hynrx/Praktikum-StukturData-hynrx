@@ -592,6 +592,9 @@ Program C++ soal 3 ini mengimplementasikan Alternatif 3 (circular buffer) dari m
 
 Modul 8: QUEUE [Modul Praktikum]. Telkom University, Bandung.
 
+GeeksforGeeks Queue Data Structure. https://www.geeksforgeeks.org/queue-data-structure/ Diakses pada 13 November 2025
+
+
 
 
 
