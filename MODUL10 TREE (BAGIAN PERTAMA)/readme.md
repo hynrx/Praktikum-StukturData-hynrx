@@ -217,7 +217,7 @@ int main()
 
 Program Guided TREE ini adalah implementasi struktur data Binary Search Tree (BST) dalam bahasa C++. Program ini memungkinkan untuk melakukan operasi dasar seperti menyisipkan data (insert), mencari data (search), menghapus data (hapus), memperbarui data (update), serta menampilkan elemen-elemen pohon menggunakan traversal PreOrder, InOrder, dan PostOrder. Fungsi-fungsi utama seperti insert dan hapus mengatur struktur pohon berdasarkan aturan BST, sementara update memungkinkan untuk memperbarui nilai suatu node dengan menghapus node lama dan menyisipkan node baru. Program juga menyediakan fitur untuk menguji keberadaan elemen dalam pohon dan menampilkan hasilnya dalam berbagai jenis traversal.
 
-## Unguided
+### Unguided
 
 1. Buatlah ADT Binary Search Tree menggunakan Linked list sebagai berikut di dalam file “bstree.h”:
 ```
@@ -285,441 +285,163 @@ return 0;
 
 3. Print tree secara pre-order dan post-order.
 
+### Jawaban
 
-
-queue.h
+bstree.h
 ```cpp
-#ifndef QUEUE_H
-#define QUEUE_H
-
+#ifndef BSTREE_H
+#define BSTREE_H
 #include <iostream>
 using namespace std;
 
-#define MAX 5
-
 typedef int infotype;
+typedef struct Node *address;
 
-struct Queue {
-    infotype info[MAX];
-    int head;
-    int tail;
+struct Node {
+    infotype info;
+    address left;
+    address right;
 };
 
-void createQueue(Queue &Q);
-bool isEmptyQueue(Queue Q);
-bool isFullQueue(Queue Q);
-void enqueue(Queue &Q, infotype x);
-void dequeue(Queue &Q);
-void printInfo(Queue Q);
+address alokasi(infotype x);
+void insertNode(address &root, infotype x);
+address findNode(infotype x, address root);
+void printInorder(address root);
+void printPreorder(address root);
+void printPostorder(address root);
 
-#endif 
+int hitungJumlahNode(address root);
+int hitungTotalInfo(address root);
+int hitungKedalaman(address root);
+
+#endif
 ```
 
-queue.cpp (alternatif 1)
+bstree.cpp
 ```
-#include "queue.h"
+#include "bstree.h"
 
-void createQueue(Queue &Q) {
-    Q.head = -1;
-    Q.tail = -1;
+address alokasi(infotype x) {
+    address p = new Node;
+    p->info = x;
+    p->left = NULL;
+    p->right = NULL;
+    return p;
 }
 
-bool isEmptyQueue(Queue Q) {
-    return (Q.head == -1 && Q.tail == -1);
-}
-
-bool isFullQueue(Queue Q) {
-    return (Q.tail == MAX - 1);
-}
-
-void enqueue(Queue &Q, infotype x) {
-    if (isFullQueue(Q)) {
-        cout << "queue penuh, tidak bisa menambah data" << endl;
+void insertNode(address &root, infotype x) {
+    if (root == NULL) {
+        root = alokasi(x);
     } else {
-        if (isEmptyQueue(Q)) {
-            Q.head = 0;
-        }
-        Q.tail++;
-        Q.info[Q.tail] = x;
-    }
-}
-
-void dequeue(Queue &Q) {
-    if (isEmptyQueue(Q)) {
-        cout << "queue kosong" << endl;
-    } else {
-        if (Q.head == Q.tail) {
-            createQueue(Q);
-        } else {
-            for (int i = Q.head; i < Q.tail; i++) {
-                Q.info[i] = Q.info[i + 1];
-            }
-            Q.tail--;
+        if (x < root->info) {
+            insertNode(root->left, x);
+        } else if (x > root->info) {
+            insertNode(root->right, x);
         }
     }
 }
 
-void printInfo(Queue Q) {
-    cout << Q.head << " \t " << Q.tail << " \t | ";
-    if (isEmptyQueue(Q)) {
-        cout << "empty queue" << endl;
-    } else {
-        for (int i = Q.head; i <= Q.tail; i++) {
-            cout << Q.info[i] << " ";
-        }
-        cout << endl;
+address findNode(infotype x, address root) {
+    if (root == NULL || root->info == x)
+        return root;
+    if (x < root->info)
+        return findNode(x, root->left);
+    return findNode(x, root->right);
+}
+
+void printPreorder(address root) {
+    if (root != NULL) {
+        cout << root->info << " ";
+        printPreorder(root->left);
+        printPreorder(root->right);
     }
+}
+
+void printInorder(address root) {
+    if (root != NULL) {
+        printInorder(root->left);
+        cout << root->info << " ";
+        printInorder(root->right);
+    }
+}
+
+void printPostorder(address root) {
+    if (root != NULL) {
+        printPostorder(root->left);
+        printPostorder(root->right);
+        cout << root->info << " ";
+    }
+}
+
+int hitungJumlahNode(address root) {
+    if (root == NULL) return 0;
+    return 1 + hitungJumlahNode(root->left) + hitungJumlahNode(root->right);
+}
+
+int hitungTotalInfo(address root) {
+    if (root == NULL) return 0;
+    return root->info + hitungTotalInfo(root->left) + hitungTotalInfo(root->right);
+}
+
+int hitungKedalaman(address root) {
+    if (root == NULL) return 0;
+    int kiri = hitungKedalaman(root->left);
+    int kanan = hitungKedalaman(root->right);
+    if (kiri > kanan) return 1 + kiri;
+    else return 1 + kanan;
 }
 ```
 
 main.cpp
 ```
 #include <iostream>
-#include "queue.h"
+#include "bstree.h"
 
 using namespace std;
 
 int main() {
-    Queue Q;
-    
-    cout << "H \t T \t | Queue info" << endl;
-    cout << "----------------------------------" << endl;
+    address root = NULL;
 
-    createQueue(Q);
-    printInfo(Q);
+    insertNode(root, 6);
+    insertNode(root, 4);
+    insertNode(root, 7);
+    insertNode(root, 2);
+    insertNode(root, 5);
+    insertNode(root, 1);
+    insertNode(root, 3);
 
-    enqueue(Q, 5);
-    printInfo(Q);
+    cout << "Hello World!" << endl;
 
-    enqueue(Q, 2);
-    printInfo(Q);
+    printInorder(root); 
+    cout << endl;
 
-    enqueue(Q, 7);
-    printInfo(Q);
+    cout << "Pre-Order   : ";
+    printPreorder(root);
+    cout << endl;
 
-    dequeue(Q);
-    printInfo(Q);
+    cout << "Post-Order  : ";
+    printPostorder(root);
+    cout << endl;
 
-    enqueue(Q, 4);
-    printInfo(Q);
-
-    dequeue(Q);
-    printInfo(Q);
-
-    dequeue(Q);
-    printInfo(Q);
-    
-    dequeue(Q);
-    printInfo(Q);
+    cout << "Kedalaman   : " << hitungKedalaman(root) << endl;
+    cout << "Jumlah Node : " << hitungJumlahNode(root) << endl;
+    cout << "Total       : " << hitungTotalInfo(root) << endl;
 
     return 0;
 }
 ```
 
 > Output
-> ![Screenshot bagian x](output/soal1.png)
+> ![Screenshot bagian x](output/unguided.png)
 
-Program soal 1 ini adalah program C++ yang mengimplementasikan struktur data Queue menggunakan representasi array (tabel) dengan ukuran maksimal 5 elemen. Program ini secara spesifik menggunakan metode yang dijelaskan dalam Alternatif 1 pada modul Anda, di mana head (setelah elemen pertama masuk) selalu dianggap berada di indeks 0. Fungsi enqueue menambahkan elemen ke posisi tail, dan tail bertambah. Fungsi dequeue mengambil elemen dari head (indeks 0), dan kemudian menggeser semua elemen sisa di dalam antrean satu posisi ke kiri. Ini adalah implementasi yang fungsional, namun, seperti yang disebutkan di modul Anda, bisa menjadi tidak efisien karena operasi pergeseran elemen.
-
-### Soal 2
-
-Buatlah implementasi ADT Queue pada file “queue.cpp” dengan menerapkan mekanisme
-queue Alternatif 2 (head bergerak, tail bergerak).
-
-untuk file header (queue.h) dan program utama (main.cpp) sama dengan nomor 1 yang berbeda hanya file queue.cpp
-
-queue.h
-```cpp
-#ifndef QUEUE_H
-#define QUEUE_H
-
-#include <iostream>
-using namespace std;
-
-#define MAX 5
-
-typedef int infotype;
-
-struct Queue {
-    infotype info[MAX];
-    int head;
-    int tail;
-};
-
-void createQueue(Queue &Q);
-bool isEmptyQueue(Queue Q);
-bool isFullQueue(Queue Q);
-void enqueue(Queue &Q, infotype x);
-void dequeue(Queue &Q);
-void printInfo(Queue Q);
-
-#endif 
-```
-
-queue.cpp (alternatif 2)
-```
-#include "queue.h"
-
-void createQueue(Queue &Q) {
-    Q.head = -1;
-    Q.tail = -1;
-}
-
-bool isEmptyQueue(Queue Q) {
-    return (Q.head == -1);
-}
-
-bool isFullQueue(Queue Q) {
-    return (Q.tail == MAX - 1);
-}
-
-void enqueue(Queue &Q, infotype x) {
-    if (isFullQueue(Q)) {
-        if (Q.head > 0) {
-            for (int i = Q.head; i <= Q.tail; i++) {
-                Q.info[i - Q.head] = Q.info[i];
-            }
-            Q.tail = Q.tail - Q.head;
-            Q.head = 0;
-            
-            Q.tail++;
-            Q.info[Q.tail] = x;
-        } else {
-            cout << "queue kosong, tidak bisa menambah data" << endl;
-        }
-    } else {
-        if (isEmptyQueue(Q)) {
-            Q.head = 0;
-        }
-        Q.tail++;
-        Q.info[Q.tail] = x;
-    }
-}
-
-void dequeue(Queue &Q) {
-    if (isEmptyQueue(Q)) {
-        cout << "queue kosong" << endl;
-    } else {
-        if (Q.head == Q.tail) {
-            createQueue(Q);
-        } else {
-            Q.head++;
-        }
-    }
-}
-
-void printInfo(Queue Q) {
-    cout << Q.head << " \t " << Q.tail << " \t | ";
-    
-    if (isEmptyQueue(Q)) {
-        cout << "empty queue" << endl;
-    } else {
-        for (int i = Q.head; i <= Q.tail; i++) {
-            cout << Q.info[i] << " ";
-        }
-        cout << endl;
-    }
-}
-```
-
-main.cpp
-```
-#include <iostream>
-#include "queue.h"
-
-using namespace std;
-
-int main() {
-    Queue Q;
-    
-    cout << "H \t T \t | Queue info" << endl;
-    cout << "----------------------------------" << endl;
-
-    createQueue(Q);
-    printInfo(Q);
-
-    enqueue(Q, 5);
-    printInfo(Q);
-
-    enqueue(Q, 2);
-    printInfo(Q);
-
-    enqueue(Q, 7);
-    printInfo(Q);
-
-    dequeue(Q);
-    printInfo(Q);
-
-    enqueue(Q, 4);
-    printInfo(Q);
-
-    dequeue(Q);
-    printInfo(Q);
-
-    dequeue(Q);
-    printInfo(Q);
-    
-    dequeue(Q);
-    printInfo(Q);
-
-    return 0;
-}
-```
-
-> Output
-> ![Screenshot bagian x](output/soal2.png)
-
-Program C++ soal 2 ini mengimplementasikan Alternatif 2 dari modul Anda, di mana head dan tail sama-sama bergerak. Logika kuncinya adalah pada dequeue, yang kini sangat efisien karena hanya memajukan head (Q.head++) tanpa menggeser seluruh elemen. Sebagai konsekuensinya, enqueue harus menangani kondisi "penuh semu" (pseudo-full), yaitu ketika tail mencapai akhir array namun di bagian awal masih ada ruang kosong. Fungsi enqueue Anda mengatasi ini dengan melakukan pergeseran elemen kembali ke awal array, tetapi hanya jika kondisi "penuh semu" itu terjadi dan elemen baru akan ditambahkan.
-
-### Soal 3
-
-Buatlah implementasi ADT Queue pada file “queue.cpp” dengan menerapkan mekanisme
-queue Alternatif 3 (head dan tail berputar).
-
-untuk file header (queue.h) dan program utama (main.cpp) sama dengan nomor 1 yang berbeda hanya file queue.cpp
-
-queue.h
-```cpp
-#ifndef QUEUE_H
-#define QUEUE_H
-
-#include <iostream>
-using namespace std;
-
-#define MAX 5
-
-typedef int infotype;
-
-struct Queue {
-    infotype info[MAX];
-    int head;
-    int tail;
-};
-
-void createQueue(Queue &Q);
-bool isEmptyQueue(Queue Q);
-bool isFullQueue(Queue Q);
-void enqueue(Queue &Q, infotype x);
-void dequeue(Queue &Q);
-void printInfo(Queue Q);
-
-#endif 
-```
-
-queue.cpp (alternatif 3)
-```
-#include "queue.h"
-
-void createQueue(Queue &Q) {
-    Q.head = -1;
-    Q.tail = -1;
-}
-
-bool isEmptyQueue(Queue Q) {
-    return (Q.head == -1);
-}
-
-bool isFullQueue(Queue Q) {
-    return ((Q.tail + 1) % MAX == Q.head);
-}
-
-void enqueue(Queue &Q, infotype x) {
-    if (isFullQueue(Q)) {
-        cout << "queue penuh, tidak bisa menambah data" << endl;
-    } else {
-        if (isEmptyQueue(Q)) {
-            Q.head = 0;
-        }
-        Q.tail = (Q.tail + 1) % MAX;
-        Q.info[Q.tail] = x;
-    }
-}
-
-void dequeue(Queue &Q) {
-    if (isEmptyQueue(Q)) {
-        cout << "queue kosong" << endl;
-    } else {
-        if (Q.head == Q.tail) {
-            createQueue(Q);
-        } else {
-            Q.head = (Q.head + 1) % MAX;
-        }
-    }
-}
-
-void printInfo(Queue Q) {
-    cout << Q.head << " \t " << Q.tail << " \t | ";
-    
-    if (isEmptyQueue(Q)) {
-        cout << "empty queue" << endl;
-    } else {
-        int i = Q.head;
-        while (true) {
-            cout << Q.info[i] << " ";
-            if (i == Q.tail) {
-                break;
-            }
-            i = (i + 1) % MAX;
-        }
-        cout << endl;
-    }
-}
-```
-
-main.cpp
-```
-#include <iostream>
-#include "queue.h"
-
-using namespace std;
-
-int main() {
-    Queue Q;
-    
-    cout << "H \t T \t | Queue info" << endl;
-    cout << "----------------------------------" << endl;
-
-    createQueue(Q);
-    printInfo(Q);
-
-    enqueue(Q, 5);
-    printInfo(Q);
-
-    enqueue(Q, 2);
-    printInfo(Q);
-
-    enqueue(Q, 7);
-    printInfo(Q);
-
-    dequeue(Q);
-    printInfo(Q);
-
-    enqueue(Q, 4);
-    printInfo(Q);
-
-    dequeue(Q);
-    printInfo(Q);
-
-    dequeue(Q);
-    printInfo(Q);
-    
-    dequeue(Q);
-    printInfo(Q);
-
-    return 0;
-}
-```
-
-> Output
-> ![Screenshot bagian x](output/soal3.png)
-
-Program C++ soal 3 ini mengimplementasikan Alternatif 3 (circular buffer) dari modul Anda, yang merupakan metode paling efisien. Inti dari logika ini adalah penggunaan operator modulo (% MAX) baik pada fungsi enqueue maupun dequeue. Saat tail atau head mencapai akhir array, mereka secara otomatis "berputar" kembali ke indeks 0. Desain ini secara elegan menyelesaikan masalah "penuh semu" dari Alternatif 2 dan sepenuhnya menghilangkan kebutuhan untuk pergeseran elemen yang tidak efisien. Fungsi isFullQueue dan printInfo juga telah disesuaikan untuk menangani logika perputaran ini dengan benar.
+Program Unguided ini mengimplementasikan struktur data Binary Search Tree atau BST yang dipecah menjadi tiga file terpisah yaitu header, source, dan main untuk menerapkan konsep Abstract Data Type. Program ini mencakup fungsi-fungsi rekursif untuk memasukkan data node baru secara terurut, melakukan penelusuran tree menggunakan metode Pre-Order, In-Order, dan Post-Order, serta mencari data tertentu. Selain operasi dasar, terdapat juga fitur statistik untuk menghitung jumlah total node, menjumlahkan seluruh nilai data dalam tree, dan mengukur kedalaman maksimum pohon. Pada bagian utama, program menyusun sebuah tree dengan urutan input tertentu dimulai dari angka 6, lalu menampilkan hasil penelusuran dan perhitungan statistiknya.
 
 ## Referensi
 
-Modul 8: QUEUE [Modul Praktikum]. Telkom University, Bandung.
+Modul 10: TREE (BAGIAN PERTAMA) [Modul Praktikum]. Telkom University, Bandung.
 
 GeeksforGeeks Queue Data Structure. https://www.geeksforgeeks.org/queue-data-structure/ Diakses pada 13 November 2025
+
 
 
 
