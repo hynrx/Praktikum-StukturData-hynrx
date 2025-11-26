@@ -440,7 +440,10 @@ Program Unguided ini mengimplementasikan struktur data Binary Search Tree atau B
 
 Modul 10: TREE (BAGIAN PERTAMA) [Modul Praktikum]. Telkom University, Bandung.
 
-GeeksforGeeks Queue Data Structure. https://www.geeksforgeeks.org/queue-data-structure/ Diakses pada 13 November 2025
+GeeksforGeeks. (2024). Binary Search Tree Data Structure. https://www.geeksforgeeks.org/binary-search-tree-data-structure/ Diakses pada 26 November 2025.
+
+GeeksforGeeks. (2024). Tree Traversal – Inorder, Preorder and Postorder. https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/ Diakses pada 26 November 2025.
+
 
 
 
