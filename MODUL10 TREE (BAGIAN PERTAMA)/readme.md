@@ -219,45 +219,73 @@ Program Guided TREE ini adalah implementasi struktur data Binary Search Tree (BS
 
 ## Unguided
 
-### Soal 1
-
-1. Buatlah ADT Queue menggunakan ARRAY sebagai berikut di dalam file “queue.h”:
+1. Buatlah ADT Binary Search Tree menggunakan Linked list sebagai berikut di dalam file “bstree.h”:
 ```
 Type infotype: integer
-Type Queue: <
-    info : array [5] of infotype {index array dalam C++
-    dimulai dari 0}
-    head, tail : integer
+Type address : pointer to Node
+Type Node: <
+info : infotype
+left, right : address
 >
-procedure CreateQueue (input/output Q: Queue)
-function isEmptyQueue (Q: Queue) → boolean
-function isFullQueue (Q: Queue) → boolean
-procedure enqueue (input/output Q: Queue, input x: infotype)
-function dequeue (input/output Q: Queue) → infotype
-procedure printInfo (input Q: Queue)
-```
-Buatlah implementasi ADT Queue pada file “queue.cpp” dengan menerapkan mekanisme queue Alternatif 1 (head diam, tail bergerak).
-```
-int main() {
-    cout << "Hello World" << endl;
-    Queue Q;
-    createQueue(Q);
-    
-    cout<<"----------------------"<<endl;
-    cout<<" H - T \t | Queue info"<<endl;
-    cout<<"----------------------"<<endl;
-    printInfo(Q);
-    enqueue(Q,5); printInfo(Q);
-    enqueue(Q,2); printInfo(Q);
-    enqueue(Q,7); printInfo(Q);
-    dequeue(Q); printInfo(Q);
-    enqueue(Q,4); printInfo(Q);
-    dequeue(Q); printInfo(Q);
-    dequeue(Q); printInfo(Q);
+ function alokasi( x : infotype ) → address
+procedure insertNode( input/output root : address,
+input x : infotype )
+function findNode( x : infotype, root : address )→address
+procedure printInorder( input root : address )
 
-    return 0;
+```
+Buatlah implementasi ADT Binary Search Tree pada file “bstree.cpp” dan cobalah hasil implementasi ADT pada file “main.cpp”
+```
+#include <iostream>
+#include "bstree.h"
+using namespace std;
+int main() {
+cout << "Hello World" << endl;
+address root = Nil;
+insertNode(root,1);
+insertNode(root,2);
+insertNode(root,6);
+insertNode(root,4);
+insertNode(root,5);
+insertNode(root,3);
+insertNode(root,6);
+insertNode(root,7);
+InOrder(root);
+return 0;
 }
 ```
+
+2. Buatlah fungsi untuk menghitung jumlah node dengan fungsi berikut.
+➢ fungsi hitungJumlahNode( root:address ) : integer
+/* fungsi mengembalikan integer banyak node yang ada di dalam BST*/
+➢ fungsi hitungTotalInfo( root:address, start:integer ) : integer
+/* fungsi mengembalikan jumlah (total) info dari node-node yang ada di dalam BST*/
+➢ fungsi hitungKedalaman( root:address, start:integer ) : integer
+/* fungsi rekursif mengembalikan integer kedalaman maksimal dari binary tree */
+```
+int main() {
+cout << "Hello World" << endl;
+address root = Nil;
+insertNode(root,1);
+insertNode(root,2);
+insertNode(root,6);
+insertNode(root,4);
+insertNode(root,5);
+insertNode(root,3);
+insertNode(root,6);
+insertNode(root,7);
+InOrder(root);
+cout<<"\n";
+cout<<"kedalaman : "<<hitungKedalaman(root,0)<<endl;
+cout<<"jumlah Node : "<<hitungNode(root)<<endl;
+cout<<"total : "<<hitungTotal(root)<<endl;
+return 0;
+}
+```
+
+3. Print tree secara pre-order dan post-order.
+
+
 
 queue.h
 ```cpp
@@ -692,6 +720,7 @@ Program C++ soal 3 ini mengimplementasikan Alternatif 3 (circular buffer) dari m
 Modul 8: QUEUE [Modul Praktikum]. Telkom University, Bandung.
 
 GeeksforGeeks Queue Data Structure. https://www.geeksforgeeks.org/queue-data-structure/ Diakses pada 13 November 2025
+
 
 
 
