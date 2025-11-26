@@ -18,9 +18,7 @@ Operasi dan Traversal pada Binary Search Tree Dalam Binary Search Tree, operasi 
 
 ## Guided
 
-### Guided Queue
-
-#### queue.cpp
+#### tree.cpp
 
 ```cpp
 #include <iostream>
@@ -443,6 +441,7 @@ Modul 10: TREE (BAGIAN PERTAMA) [Modul Praktikum]. Telkom University, Bandung.
 GeeksforGeeks. (2024). Binary Search Tree Data Structure. https://www.geeksforgeeks.org/binary-search-tree-data-structure/ Diakses pada 26 November 2025.
 
 GeeksforGeeks. (2024). Tree Traversal – Inorder, Preorder and Postorder. https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/ Diakses pada 26 November 2025.
+
 
 
 
