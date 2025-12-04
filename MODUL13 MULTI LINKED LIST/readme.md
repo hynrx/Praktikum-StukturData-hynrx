@@ -391,6 +391,11 @@ Program Unguided ini merupakan implementasi penyelesaian soal latihan pada Modul
 
 Modul 13: MULTI LINKED LIST [Modul Praktikum]. Telkom University, Bandung.
 
+GeeksforGeeks. (2024). Singly Linked List. Diakses pada 4 Desember 2025
+
+GeeksforGeeks. (2023). Multi-level Linked List Implementation. https://www.geeksforgeeks.org/flatten-a-linked-list-with-next-and-child-pointers/ Diakses pada 4 Desember 2025
+
+
 
 
 
