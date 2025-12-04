@@ -385,15 +385,13 @@ int main() {
 > Output
 > ![Screenshot bagian x](output/unguided.png)
 
-Program Unguided ini mengimplementasikan struktur data Binary Search Tree atau BST yang dipecah menjadi tiga file terpisah yaitu header, source, dan main untuk menerapkan konsep Abstract Data Type. Program ini mencakup fungsi-fungsi rekursif untuk memasukkan data node baru secara terurut, melakukan penelusuran tree menggunakan metode Pre-Order, In-Order, dan Post-Order, serta mencari data tertentu. Selain operasi dasar, terdapat juga fitur statistik untuk menghitung jumlah total node, menjumlahkan seluruh nilai data dalam tree, dan mengukur kedalaman maksimum pohon. Pada bagian utama, program menyusun sebuah tree dengan urutan input tertentu dimulai dari angka 6, lalu menampilkan hasil penelusuran dan perhitungan statistiknya.
+Program Unguided ini merupakan implementasi penyelesaian soal latihan pada Modul 13 Multi Linked List, di mana praktikan diminta membangun struktur data Circular Single Linked List untuk studi kasus data mahasiswa. Sesuai spesifikasi latihan, program ini tidak membentuk hierarki parent-child (multi list), melainkan menyusun data mahasiswa (Nama, NIM, Jenis Kelamin, IPK) dalam satu rangkaian list melingkar (circular) di mana pointer elemen terakhir kembali menunjuk ke elemen pertama. Seluruh operasi manipulasi data seperti insert, delete, dan search dikemas dalam ADT yang membagi kode menjadi bagian deklarasi, implementasi, dan pengujian utama sesuai standar pemrograman modular.
 
 ## Referensi
 
-Modul 10: TREE (BAGIAN PERTAMA) [Modul Praktikum]. Telkom University, Bandung.
+Modul 13: MULTI LINKED LIST [Modul Praktikum]. Telkom University, Bandung.
 
-GeeksforGeeks. (2024). Binary Search Tree Data Structure. https://www.geeksforgeeks.org/binary-search-tree-data-structure/ Diakses pada 26 November 2025.
 
-GeeksforGeeks. (2024). Tree Traversal – Inorder, Preorder and Postorder. https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/ Diakses pada 26 November 2025.
 
 
 
