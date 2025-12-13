@@ -5,11 +5,11 @@
 
 ### GRAPH
 
-Multi Linked List merupakan sebuah struktur data dinamis yang terdiri dari sekumpulan list yang berbeda namun memiliki keterhubungan satu sama lain. Dalam struktur ini, setiap elemen di dalam list memiliki kemampuan untuk membentuk list tersendiri, yang secara umum dikategorikan menjadi dua bagian utama, yaitu list induk (parent) dan list anak (child). Implementasi dari struktur ini dapat dilihat pada kasus data kepegawaian, di mana terdapat list pegawai sebagai list induk yang menunjuk pada satu buah list anak, sehingga menciptakan relasi data yang terstruktur antara entitas utama dan sub-entitasnya.
+Graph didefinisikan sebagai himpunan tidak kosong yang terdiri dari node (atau disebut juga vertex) dan garis penghubung yang disebut edge. Struktur data ini digunakan untuk merepresentasikan hubungan antar objek, di mana node mewakili entitas tertentu, seperti tempat atau lokasi, sedangkan edge mewakili hubungan atau jalan yang menghubungkan entitas-entitas tersebut. Konsep dasar yang penting dalam graph adalah ketetanggaan, di mana suatu node dikatakan bertetangga dengan node lain jika keduanya dihubungkan secara langsung oleh sebuah edge. Edge dalam graph juga dapat memiliki nilai atau bobot yang merepresentasikan jarak, biaya, atau atribut lain dari hubungan tersebut.
 
-Dalam pengoperasian manipulasi data, Multi Linked List memiliki prosedur khusus terutama pada operasi penyisipan (insert) dan penghapusan (delete). Untuk operasi penambahan elemen induk, konsep yang digunakan sama dengan operasi insert pada struktur data Singly, Doubly, maupun Circular Linked List pada umumnya. Berbeda halnya dengan penambahan elemen anak, di mana proses ini mewajibkan program untuk mengetahui atau mencari posisi elemen induknya terlebih dahulu sebelum elemen anak baru dapat disisipkan ke dalam list yang sesuai.
+Berdasarkan arah hubungannya, graph dibedakan menjadi dua jenis utama, yaitu Graph Berarah (Directed Graph) dan Graph Tidak Berarah (Undirected Graph). Pada Directed Graph, setiap edge memiliki arah yang spesifik, sehingga jika node A terhubung ke node B, belum tentu node B terhubung kembali ke node A. Sebaliknya, pada Undirected Graph, hubungan antar node tidak memiliki arah, yang berarti jika node A terhubung dengan node B, maka secara otomatis terbentuk hubungan timbal balik antara keduanya. Representasi graph di dalam pemrograman dapat dilakukan menggunakan Matrik Ketetanggaan (Array 2 Dimensi) atau Multi Linked List. Dalam praktikum ini, representasi yang digunakan adalah Multi Linked List karena sifatnya yang dinamis dalam menangani penambahan data. Struktur ini melibatkan penggunaan pointer di mana node induk berisi informasi node dan pointer ke node anak atau edge, sementara node anak merepresentasikan hubungan ke node tujuan.
 
-Aturan ketergantungan yang ketat juga berlaku pada operasi penghapusan data. Sama seperti proses insert, penghapusan elemen anak mengharuskan identifikasi terhadap elemen induknya agar pointer dapat diakses dengan tepat. Selain itu, terdapat aturan krusial pada penghapusan elemen induk; apabila sebuah elemen induk dihapus, maka seluruh elemen anak yang bernaung di bawah induk tersebut juga harus ikut dihapus. Hal ini memastikan bahwa tidak ada data anak yang tertinggal tanpa induk (dangling) yang dapat menyebabkan inkonsistensi data dalam memori.
+Untuk menelusuri atau mengunjungi node-node di dalam graph, terdapat dua metode pencarian utama, yaitu Breadth First Search (BFS) dan Depth First Search (DFS). BFS bekerja dengan mengunjungi node mulai dari root (kedalaman 0), kemudian menyusur ke seluruh node pada kedalaman 1, kedalaman 2, dan seterusnya secara melebar, yang biasanya diimplementasikan menggunakan struktur data Queue. Sementara itu, DFS bekerja dengan mengunjungi root dan kemudian menelusuri sedalam mungkin ke subtree node tersebut secara rekursif sebelum kembali (backtracking), yang umumnya diimplementasikan menggunakan struktur data Stack. Selain metode penelusuran, terdapat juga konsep Topological Sort, yaitu proses pengurutan linear dari elemen-elemen yang memiliki keterurutan parsial, seperti prasyarat mata kuliah atau urutan pengerjaan tugas dalam sebuah proyek, di mana elemen yang tidak memiliki predecessor akan diproses terlebih dahulu.
 
 ## Guided
 
@@ -18,120 +18,239 @@ Aturan ketergantungan yang ketat juga berlaku pada operasi penghapusan data. Sam
 ```cpp
 #include <iostream>
 #include <string>
+
 using namespace std;
 
-struct ChildNode
+struct Anak
 {
-    string info;
-    ChildNode *next;
+    string namaAnak;
+    Anak *next;
+    Anak *prev;
 };
 
-struct ParentNode
+struct Pegawai
 {
-    string info;
-    ChildNode *childHead;
-    ParentNode *next;
+    string namaPegawai;
+
+    Pegawai *next;
+    Pegawai *prev;
+
+    Anak *headAnak;
+    Anak *tailAnak;
 };
 
-ParentNode *createParent(string info)
+struct MultiList
 {
-    ParentNode *newNode = new ParentNode;
-    newNode->info = info;
-    newNode->childHead = NULL;
-    newNode->next = NULL;
-    return newNode;
+    Pegawai *head;
+    Pegawai *tail;
+};
+
+void createList(MultiList &L)
+{
+    L.head = NULL;
+    L.tail = NULL;
 }
 
-ChildNode *createChild(string info)
+bool isEmpty(MultiList L)
 {
-    ChildNode *newNode = new ChildNode;
-    newNode->info = info;
-    newNode->next = NULL;
-    return newNode;
+    return L.head == NULL;
 }
 
-void insertParent(ParentNode *&head, string info)
+Pegawai *findPegawai(MultiList L, string nama)
 {
-    ParentNode *newNode = createParent(info);
-    if (head == NULL)
+    Pegawai *P = L.head;
+    while (P != NULL)
     {
-        head = newNode;
+        if (P->namaPegawai == nama)
+        {
+            return P;
+        }
+        P = P->next;
+    }
+    return NULL;
+}
+
+void insertPegawai(MultiList &L, string nama)
+{
+    Pegawai *baru = new Pegawai;
+    baru->namaPegawai = nama;
+    baru->next = NULL;
+    baru->prev = NULL;
+    baru->headAnak = NULL;
+    baru->tailAnak = NULL;
+
+    if (isEmpty(L))
+    {
+        L.head = baru;
+        L.tail = baru;
     }
     else
     {
-        ParentNode *temp = head;
-        while (temp->next != NULL)
-        {
-            temp = temp->next;
-        }
-        temp->next = newNode;
+        L.tail->next = baru;
+        baru->prev = L.tail;
+        L.tail = baru;
     }
+    cout << "[Success] Pegawai '" << nama << "' berhasil ditambahkan." << endl;
 }
 
-void insertChild(ParentNode *head, string parentInfo, string childInfo)
+void insertAnak(MultiList &L, string namaPegawai, string namaAnak)
 {
-    ParentNode *p = head;
-    while (p != NULL && p->info != parentInfo)
+    Pegawai *P = findPegawai(L, namaPegawai);
+
+    if (P == NULL)
     {
-        p = p->next;
+        cout << "[Error] Pegawai '" << namaPegawai << "' tidak ditemukan. Gagal tambah anak." << endl;
+        return;
     }
-    
-    if (p != NULL)
+    Anak *baru = new Anak;
+    baru->namaAnak = namaAnak;
+    baru->next = NULL;
+    baru->prev = NULL;
+    if (P->headAnak == NULL)
     {
-        ChildNode *newChild = createChild(childInfo);
-        
-        if (p->childHead == NULL)
+        P->headAnak = baru;
+        P->tailAnak = baru;
+    }
+    else
+    {
+        P->tailAnak->next = baru;
+        baru->prev = P->tailAnak;
+        P->tailAnak = baru;
+    }
+    cout << "[Success] Anak '" << namaAnak << "' ditambahkan ke Pegawai '" << namaPegawai << "'." << endl;
+}
+
+void deletePegawai(MultiList &L, string nama)
+{
+    Pegawai *P = findPegawai(L, nama);
+
+    if (P == NULL)
+    {
+        cout << "[Error] Pegawai '" << nama << "' tidak ditemukan." << endl;
+        return;
+    }
+    Anak *A = P->headAnak;
+    while (A != NULL)
+    {
+        Anak *hapusAnak = A;
+        A = A->next;
+        delete hapusAnak;
+    }
+    if (P == L.head)
+    {
+        L.head = P->next;
+        if (L.head != NULL)
+            L.head->prev = NULL;
+        else
+            L.tail = NULL;
+    }
+    else if (P == L.tail)
+    {
+        L.tail = P->prev;
+        L.tail->next = NULL;
+    }
+    else
+    {
+        P->prev->next = P->next;
+        P->next->prev = P->prev;
+    }
+
+    delete P;
+    cout << "[Success] Pegawai '" << nama << "' dan seluruh anaknya telah dihapus." << endl;
+}
+
+void deleteAnak(MultiList &L, string namaPegawai, string namaAnak)
+{
+    Pegawai *P = findPegawai(L, namaPegawai);
+    if (P == NULL)
+    {
+        cout << "[Error] Pegawai tidak ditemukan." << endl;
+        return;
+    }
+    Anak *A = P->headAnak;
+    while (A != NULL)
+    {
+        if (A->namaAnak == namaAnak)
         {
-            p->childHead = newChild;
+            if (A == P->headAnak)
+            {
+                P->headAnak = A->next;
+                if (P->headAnak != NULL)
+                    P->headAnak->prev = NULL;
+                else
+                    P->tailAnak = NULL;
+            }
+            else if (A == P->tailAnak)
+            {
+                P->tailAnak = A->prev;
+                P->tailAnak->next = NULL;
+            }
+            else
+            {
+                A->prev->next = A->next;
+                A->next->prev = A->prev;
+            }
+            delete A;
+            cout << "[Success] Anak '" << namaAnak << "' dari Pegawai '" << namaPegawai << "' dihapus." << endl;
+            return;
+        }
+        A = A->next;
+    }
+    cout << "[Error] Anak '" << namaAnak << "' tidak ditemukan pada Pegawai ini." << endl;
+}
+
+void printAll(MultiList L)
+{
+    if (isEmpty(L))
+    {
+        cout << "List Kosong." << endl;
+        return;
+    }
+
+    Pegawai *P = L.head;
+    cout << "\n=== DATA MULTI LINKED LIST ===" << endl;
+    while (P != NULL)
+    {
+        cout << "Pegawai: " << P->namaPegawai << endl;
+
+        Anak *A = P->headAnak;
+        if (A == NULL)
+        {
+            cout << "   -> (Tidak memiliki anak)" << endl;
         }
         else
         {
-            ChildNode *c = p->childHead;
-            while (c->next != NULL)
+            while (A != NULL)
             {
-                c = c->next;
-            }
-            c->next = newChild;
-        }
-    }
-}
-
-void printAll(ParentNode *head)
-{
-    ParentNode *p = head;
-    while (p != NULL)
-    {
-        cout << p->info;
-        ChildNode *c = p->childHead;
-        if (c != NULL)
-        {
-            while (c != NULL)
-            {
-                cout << " -> " << c->info;
-                c = c->next;
+                cout << "   -> Anak: " << A->namaAnak << endl;
+                A = A->next;
             }
         }
-     cout << endl;
-        p = p->next;
+        cout << "------------------------------" << endl;
+        P = P->next;
     }
+    cout << endl;
 }
 
 int main()
 {
-    ParentNode *list = NULL;
-    
-    insertParent(list, "Parent Node 1");
-    insertParent(list, "Parent Node 2");
-    
-    printAll(list);
+    MultiList listPegawai;
+    createList(listPegawai);
+    insertPegawai(listPegawai, "Budi");
+    insertPegawai(listPegawai, "Susi");
+    insertPegawai(listPegawai, "Anton");
+
     cout << "\n";
-    
-    insertChild(list, "Parent Node 1", "Child Node A");
-    insertChild(list, "Parent Node 1", "Child Node B");
-    insertChild(list, "Parent Node 2", "Child Node C");
-    
-    printAll(list);
-    
+    insertAnak(listPegawai, "Budi", "Rara");
+    insertAnak(listPegawai, "Budi", "Dony");
+    insertAnak(listPegawai, "Susi", "Kiki");   
+    printAll(listPegawai);
+    cout << "> Menghapus Dony (Anak Budi)..." << endl;
+    deleteAnak(listPegawai, "Budi", "Dony"); 
+    cout << "> Menghapus Pegawai Susi..." << endl;
+    deletePegawai(listPegawai, "Susi");
+    printAll(listPegawai);
+
     return 0;
 }
 ```
@@ -139,245 +258,303 @@ int main()
 > Output
 > ![Screenshot bagian x](output/guided.png)
 
-Program Guided MULTI LINKED LIST ini merupakan implementasi sederhana dari struktur data Multi Linked List menggunakan bahasa C++, yang dirancang untuk merepresentasikan relasi hierarkis one-to-many antara simpul induk (ParentNode) dan simpul anak (ChildNode). Melalui penggunaan dua struktur data yang saling terhubung pointer, program ini memfasilitasi penambahan elemen induk ke dalam senarai utama serta memungkinkan penyisipan elemen anak secara spesifik di bawah induk yang sesuai berdasarkan pencarian nilai string-nya. Keseluruhan logika program diakhiri dengan fungsi traversal yang mencetak setiap induk diikuti oleh seluruh rangkaian anak yang dimilikinya secara berurutan, memvisualisasikan hubungan keterkaitan data tersebut.
+Program guided graph ini merupakan implementasi struktur data Multi-Linked List (list di dalam list) menggunakan bahasa C++ yang memodelkan hubungan hierarkis antara Pegawai sebagai parent list dan Anak sebagai child list. Menggunakan struktur Doubly Linked List untuk kedua level, program ini menyediakan fungsionalitas lengkap untuk manajemen data dinamis, meliputi penambahan (insert) pegawai dan anak, pencarian (search), penayangan seluruh data, serta penghapusan (delete) data spesifik; di mana logika penghapusan pegawai dirancang untuk secara otomatis membersihkan seluruh data anak yang terkait guna mencegah kebocoran memori (memory leak).
 
 ### Unguided
 
-Implementasikan ADT Multi Linked List dan ADT Linked List untuk studi kasus data mahasiswa (Nama, NIM, Jenis Kelamin, IPK) beserta seluruh operasi manipulasi data (insert, delete, find, print) menggunakan bahasa C++ sesuai spesifikasi header yang diberikan.
+1. Buatlah ADT Binary Search Tree menggunakan Linked list sebagai berikut di dalam file “graph.h”:
+```
+Type infoGraph: char
+Type adrNode : pointer to ElmNode
+Type adrEdge : pointer to ElmNode
+Type ElmNode <
+info : infoGraph
+visited : integer
+firstEdge : adrEdge
+Next : adrNode
+>
+Type ElmEdge <
+Node : adrNode
+Next : adrEdge
+>
+Type Graph <
+first : adrNode
+>
+procedure CreateGraph (input/output G : Graph)
+procedure InsertNode (input/output G : Graph,
+ input X : infotype)
+procedure ConnectNode (input/output N1, N2 : adrNode)
+procedure PrintInfoGraph (input G : Graph)
+```
+Buatlah implementasi ADT Graph pada file “graph.cpp” dan cobalah hasil implementasi ADT
+pada file “main.cpp”.
 
-multilist.h
+2. Buatlah prosedur untuk menampilkanhasil penelusuran DFS. prosedur PrintDFS (Graph G, adrNode N);
+
+3. Buatlah prosedur untuk menampilkanhasil penelusuran DFS. prosedur PrintBFS (Graph G, adrNode N);
+
+graph.h
 ```cpp
-#ifndef CIRCULARLIST_H
-#define CIRCULARLIST_H
-
+#ifndef GRAPH_H
+#define GRAPH_H
 #include <iostream>
-#include <string>
+
 using namespace std;
 
-struct Mahasiswa {
-    string nama;
-    string nim;
-    char jenis_kelamin;
-    float ipk;
+typedef char infoGraph;
+typedef struct ElmNode *adrNode;
+typedef struct ElmEdge *adrEdge;
+
+struct ElmNode {
+    infoGraph info;
+    int visited;
+    adrEdge firstEdge;
+    adrNode Next;
 };
 
-typedef Mahasiswa infotype;
-typedef struct ElmList *address;
-
-struct ElmList {
-    infotype info;
-    address next;
+struct ElmEdge {
+    adrNode Node;
+    adrEdge Next;
 };
 
-struct List {
-    address first;
+struct Graph {
+    adrNode first;
 };
 
-void createList(List &L);
-address alokasi(infotype x);
-void dealokasi(address P);
-void insertFirst(List &L, address P);
-void insertLast(List &L, address P);
-void insertAfter(List &L, address Prec, address P);
-void deleteFirst(List &L, address &P);
-void deleteLast(List &L, address &P);
-void deleteAfter(List &L, address Prec, address &P);
-address findElm(List L, string nim);
-void printInfo(List L);
-
-address createData(string nama, string nim, char jenis_kelamin, float ipk);
+void CreateGraph(Graph &G);
+adrNode AllocateNode(infoGraph X);
+adrEdge AllocateEdge(adrNode N);
+void InsertNode(Graph &G, infoGraph X);
+void ConnectNode(adrNode N1, adrNode N2);
+void PrintInfoGraph(Graph G);
+adrNode FindNode(Graph G, infoGraph X);
+void ResetVisited(Graph &G);
+void PrintDFS(Graph G, adrNode N);
+void PrintBFS(Graph G, adrNode N);
 
 #endif
 ```
 
-multilist.cpp
+graph.cpp
 ```
-#include "multilist.h"
+#include "graph.h"
 
-void createList(List &L) {
-    L.first = NULL;
+struct QNode {
+    adrNode data;
+    QNode *next;
+};
+
+struct Queue {
+    QNode *head;
+    QNode *tail;
+};
+
+void createQueue(Queue &Q) {
+    Q.head = NULL;
+    Q.tail = NULL;
 }
 
-address alokasi(infotype x) {
-    address P = new ElmList;
-    P->info = x;
-    P->next = NULL;
-    return P;
+bool isEmptyQ(Queue Q) {
+    return Q.head == NULL;
 }
 
-void dealokasi(address P) {
-    delete P;
-}
-
-address createData(string nama, string nim, char jenis_kelamin, float ipk) {
-    infotype x;
-    x.nama = nama;
-    x.nim = nim;
-    x.jenis_kelamin = jenis_kelamin;
-    x.ipk = ipk;
-    return alokasi(x);
-}
-
-void insertFirst(List &L, address P) {
-    if (L.first == NULL) {
-        L.first = P;
-        P->next = L.first;
+void enqueue(Queue &Q, adrNode N) {
+    QNode *newQ = new QNode;
+    newQ->data = N;
+    newQ->next = NULL;
+    if (isEmptyQ(Q)) {
+        Q.head = newQ;
+        Q.tail = newQ;
     } else {
-        address last = L.first;
-        while (last->next != L.first) {
-            last = last->next;
-        }
-        P->next = L.first;
-        last->next = P;
-        L.first = P;
+        Q.tail->next = newQ;
+        Q.tail = newQ;
     }
 }
 
-void insertLast(List &L, address P) {
-    if (L.first == NULL) {
-        insertFirst(L, P);
+adrNode dequeue(Queue &Q) {
+    if (isEmptyQ(Q)) return NULL;
+    QNode *temp = Q.head;
+    adrNode N = temp->data;
+    Q.head = Q.head->next;
+    if (Q.head == NULL) {
+        Q.tail = NULL;
+    }
+    delete temp;
+    return N;
+}
+
+void CreateGraph(Graph &G) {
+    G.first = NULL;
+}
+
+adrNode AllocateNode(infoGraph X) {
+    adrNode N = new ElmNode;
+    N->info = X;
+    N->visited = 0;
+    N->firstEdge = NULL;
+    N->Next = NULL;
+    return N;
+}
+
+adrEdge AllocateEdge(adrNode N) {
+    adrEdge E = new ElmEdge;
+    E->Node = N;
+    E->Next = NULL;
+    return E;
+}
+
+void InsertNode(Graph &G, infoGraph X) {
+    adrNode N = AllocateNode(X);
+    if (G.first == NULL) {
+        G.first = N;
     } else {
-        address last = L.first;
-        while (last->next != L.first) {
-            last = last->next;
+        adrNode P = G.first;
+        while (P->Next != NULL) {
+            P = P->Next;
         }
-        last->next = P;
-        P->next = L.first;
+        P->Next = N;
     }
 }
 
-void insertAfter(List &L, address Prec, address P) {
-    if (Prec != NULL) {
-        P->next = Prec->next;
-        Prec->next = P;
+void ConnectNode(adrNode N1, adrNode N2) {
+    if (N1 != NULL && N2 != NULL) {
+        adrEdge E1 = AllocateEdge(N2);
+        E1->Next = N1->firstEdge;
+        N1->firstEdge = E1;
+
+        adrEdge E2 = AllocateEdge(N1);
+        E2->Next = N2->firstEdge;
+        N2->firstEdge = E2;
     }
 }
 
-void deleteFirst(List &L, address &P) {
-    if (L.first == NULL) {
-        P = NULL;
-    } else if (L.first->next == L.first) {
-        P = L.first;
-        L.first = NULL;
-    } else {
-        address last = L.first;
-        while (last->next != L.first) {
-            last = last->next;
+void PrintInfoGraph(Graph G) {
+    adrNode P = G.first;
+    while (P != NULL) {
+        cout << "Node " << P->info << " terhubung dengan : ";
+        adrEdge E = P->firstEdge;
+        while (E != NULL) {
+            cout << E->Node->info << " ";
+            E = E->Next;
         }
-        P = L.first;
-        L.first = P->next;
-        last->next = L.first;
-        P->next = NULL;
+        cout << endl;
+        P = P->Next;
     }
 }
 
-void deleteLast(List &L, address &P) {
-    if (L.first == NULL) {
-        P = NULL;
-    } else if (L.first->next == L.first) {
-        deleteFirst(L, P);
-    } else {
-        address last = L.first;
-        address prevLast = NULL;
-        while (last->next != L.first) {
-            prevLast = last;
-            last = last->next;
-        }
-        P = last;
-        prevLast->next = L.first;
-        P->next = NULL;
-    }
-}
-
-void deleteAfter(List &L, address Prec, address &P) {
-    if (Prec != NULL && Prec->next != L.first) {
-        P = Prec->next;
-        Prec->next = P->next;
-        P->next = NULL;
-    } else if (Prec != NULL && Prec->next == L.first) {
-        deleteFirst(L, P);
-    }
-}
-
-address findElm(List L, string nim) {
-    if (L.first == NULL) return NULL;
-    
-    address P = L.first;
-    do {
-        if (P->info.nim == nim) {
+adrNode FindNode(Graph G, infoGraph X) {
+    adrNode P = G.first;
+    while (P != NULL) {
+        if (P->info == X) {
             return P;
         }
-        P = P->next;
-    } while (P != L.first);
-    
+        P = P->Next;
+    }
     return NULL;
 }
 
-void printInfo(List L) {
-    if (L.first == NULL) {
-        cout << "List Kosong" << endl;
-        return;
+void ResetVisited(Graph &G) {
+    adrNode P = G.first;
+    while (P != NULL) {
+        P->visited = 0;
+        P = P->Next;
     }
+}
+
+void DFS_Helper(adrNode N) {
+    if (N == NULL || N->visited == 1) return;
     
-    address P = L.first;
-    do {
-        cout << "Nama\t: " << P->info.nama << endl;
-        cout << "NIM\t: " << P->info.nim << endl;
-        cout << "L/P\t: " << P->info.jenis_kelamin << endl;
-        cout << "IPK\t: " << P->info.ipk << endl;
-        cout << "       " << endl;
-        P = P->next;
-    } while (P != L.first);
+    N->visited = 1;
+    cout << N->info << " ";
+    
+    adrEdge E = N->firstEdge;
+    while (E != NULL) {
+        if (E->Node->visited == 0) {
+            DFS_Helper(E->Node);
+        }
+        E = E->Next;
+    }
+}
+
+void PrintDFS(Graph G, adrNode N) {
+    ResetVisited(G);
+    DFS_Helper(N);
+    cout << endl;
+}
+
+void PrintBFS(Graph G, adrNode N) {
+    ResetVisited(G);
+    if (N == NULL) return;
+
+    Queue Q;
+    createQueue(Q);
+    
+    enqueue(Q, N);
+    N->visited = 1;
+
+    while (!isEmptyQ(Q)) {
+        adrNode current = dequeue(Q);
+        cout << current->info << " ";
+
+        adrEdge E = current->firstEdge;
+        while (E != NULL) {
+            if (E->Node->visited == 0) {
+                E->Node->visited = 1;
+                enqueue(Q, E->Node);
+            }
+            E = E->Next;
+        }
+    }
+    cout << endl;
 }
 ```
 
 main.cpp
 ```
-#include "multilist.h"
+#include "graph.h"
 
 int main() {
-    List L;
-    address P1 = NULL;
-    address P2 = NULL;
-    infotype x;
+    Graph G;
+    CreateGraph(G);
 
-    createList(L);
-    
-    cout << "coba insert first, last, dan after" << endl;
+    InsertNode(G, 'A');
+    InsertNode(G, 'B');
+    InsertNode(G, 'C');
+    InsertNode(G, 'D');
+    InsertNode(G, 'E');
+    InsertNode(G, 'F');
+    InsertNode(G, 'G');
+    InsertNode(G, 'H');
 
-    P1 = createData("Danu", "04", 'L', 4.0);
-    insertFirst(L, P1);
+    adrNode A = FindNode(G, 'A');
+    adrNode B = FindNode(G, 'B');
+    adrNode C = FindNode(G, 'C');
+    adrNode D = FindNode(G, 'D');
+    adrNode E = FindNode(G, 'E');
+    adrNode F = FindNode(G, 'F');
+    adrNode G_Node = FindNode(G, 'G');
+    adrNode H = FindNode(G, 'H');
 
-    P1 = createData("Fahmi", "06", 'L', 3.45);
-    insertLast(L, P1);
+    ConnectNode(A, B);
+    ConnectNode(A, C);
+    ConnectNode(B, D);
+    ConnectNode(B, E);
+    ConnectNode(C, F);
+    ConnectNode(C, G_Node);
+    ConnectNode(D, H);
+    ConnectNode(E, H);
+    ConnectNode(F, H);
+    ConnectNode(G_Node, H);
 
-    P1 = createData("Bobi", "02", 'L', 3.71);
-    insertLast(L, P1); 
+    PrintInfoGraph(G);
+    cout << endl;
 
-    P1 = createData("Ali", "01", 'L', 3.3);
-    insertFirst(L, P1);
+    cout << "DFS TRAVERSAL: ";
+    PrintDFS(G, A);
 
-    P1 = createData("Gita", "07", 'P', 3.75);
-    insertLast(L, P1); 
+    cout << "BFS TRAVERSAL: ";
+    PrintBFS(G, A);
 
-    address foundNode = findElm(L, "07");
-    if (foundNode != NULL) {
-        P2 = createData("Cindi", "03", 'P', 3.5);
-        insertAfter(L, foundNode, P2);
-    }
-
-    foundNode = findElm(L, "02");
-    if (foundNode != NULL) {
-        P2 = createData("Hilmi", "08", 'L', 3.3);
-        insertAfter(L, foundNode, P2);
-    }
-    
-    foundNode = findElm(L, "04");
-    if (foundNode != NULL) {
-        P2 = createData("Eli", "05", 'P', 3.4);
-        insertAfter(L, foundNode, P2);
-    }
-    printInfo(L);
     return 0;
 }
 ```
@@ -385,15 +562,16 @@ int main() {
 > Output
 > ![Screenshot bagian x](output/unguided.png)
 
-Program Unguided ini merupakan implementasi penyelesaian soal latihan pada Modul 13 Multi Linked List, di mana praktikan diminta membangun struktur data Circular Single Linked List untuk studi kasus data mahasiswa. Sesuai spesifikasi latihan, program ini tidak membentuk hierarki parent-child (multi list), melainkan menyusun data mahasiswa (Nama, NIM, Jenis Kelamin, IPK) dalam satu rangkaian list melingkar (circular) di mana pointer elemen terakhir kembali menunjuk ke elemen pertama. Seluruh operasi manipulasi data seperti insert, delete, dan search dikemas dalam ADT yang membagi kode menjadi bagian deklarasi, implementasi, dan pengujian utama sesuai standar pemrograman modular.
+Program unguided ini adalah implementasi struktur data Graf tak berarah menggunakan representasi adjacency list dalam bahasa C++. Kode ini mencakup definisi tipe data abstrak untuk node dan edge, serta menyediakan operasi dasar seperti penambahan node, penghubungan antar node, dan penayangan informasi koneksi graf. Selain itu, program ini mengimplementasikan dua algoritma penelusuran utama, yaitu Depth First Search (DFS) secara rekursif dan Breadth First Search (BFS) menggunakan bantuan struktur data queue buatan sendiri, yang didemonstrasikan melalui simulasi koneksi node A hingga H di fungsi utama.
 
 ## Referensi
 
-Modul 13: MULTI LINKED LIST [Modul Praktikum]. Telkom University, Bandung.
+Modul 14: GRAPH [Modul Praktikum]. Telkom University, Bandung.
 
 GeeksforGeeks. (2024). Singly Linked List. Diakses pada 4 Desember 2025
 
 GeeksforGeeks. (2023). Multi-level Linked List Implementation. https://www.geeksforgeeks.org/flatten-a-linked-list-with-next-and-child-pointers/ Diakses pada 4 Desember 2025
+
 
 
 
