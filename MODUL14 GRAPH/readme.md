@@ -568,9 +568,8 @@ Program unguided ini adalah implementasi struktur data Graf tak berarah mengguna
 
 Modul 14: GRAPH [Modul Praktikum]. Telkom University, Bandung.
 
-GeeksforGeeks. (2024). Singly Linked List. Diakses pada 4 Desember 2025
+GeeksforGeeks. (2023). Multi-level Linked List Implementation. https://www.geeksforgeeks.org/flatten-a-linked-list-with-next-and-child-pointers/ Diakses pada 13 Desember 2025
 
-GeeksforGeeks. (2023). Multi-level Linked List Implementation. https://www.geeksforgeeks.org/flatten-a-linked-list-with-next-and-child-pointers/ Diakses pada 4 Desember 2025
 
 
 
