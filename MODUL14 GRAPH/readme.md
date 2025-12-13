@@ -562,7 +562,7 @@ int main() {
 > Output
 > ![Screenshot bagian x](output/unguided.png)
 
-Program unguided ini adalah implementasi struktur data Graf tak berarah menggunakan representasi adjacency list dalam bahasa C++. Kode ini mencakup definisi tipe data abstrak untuk node dan edge, serta menyediakan operasi dasar seperti penambahan node, penghubungan antar node, dan penayangan informasi koneksi graf. Selain itu, program ini mengimplementasikan dua algoritma penelusuran utama, yaitu Depth First Search (DFS) secara rekursif dan Breadth First Search (BFS) menggunakan bantuan struktur data queue buatan sendiri, yang didemonstrasikan melalui simulasi koneksi node A hingga H di fungsi utama.
+Program unguided ini adalah implementasi struktur data Graf tak berarah menggunakan representasi adjacency list dalam bahasa C++. Soal unguided ini mencakup definisi tipe data abstrak untuk node dan edge, serta menyediakan operasi dasar seperti penambahan node, penghubungan antar node, dan penayangan informasi koneksi graf. Selain itu, program ini mengimplementasikan dua algoritma penelusuran utama, yaitu Depth First Search (DFS) secara rekursif dan Breadth First Search (BFS) menggunakan bantuan struktur data queue buatan sendiri, yang didemonstrasikan melalui simulasi koneksi node A hingga H di fungsi utama.
 
 ## Referensi
 
@@ -571,6 +571,7 @@ Modul 14: GRAPH [Modul Praktikum]. Telkom University, Bandung.
 GeeksforGeeks. (2024). Singly Linked List. Diakses pada 4 Desember 2025
 
 GeeksforGeeks. (2023). Multi-level Linked List Implementation. https://www.geeksforgeeks.org/flatten-a-linked-list-with-next-and-child-pointers/ Diakses pada 4 Desember 2025
+
 
 
 
